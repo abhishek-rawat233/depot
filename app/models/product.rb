@@ -1,5 +1,6 @@
 class Product < ApplicationRecord
   validates :title, :description, :image_url, presence: true
+  validates :title, length: {minimum: 10}
   validates :title, uniqueness: true
   validates :image_url, allow_blank: true, format: {
     with:
