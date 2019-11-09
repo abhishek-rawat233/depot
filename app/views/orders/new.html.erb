@@ -1,0 +1,8 @@
+<section class="depot_form">
+  <h1>Please Enter Your Details</h1>
+  <%= render 'form', order: @order %>
+</section>
+<!-- <h1>New Order</h1> -->
+
+<%= javascript_pack_tag("pay_type") %>
+<%= link_to 'Back', orders_path %>
