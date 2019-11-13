@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Wsers</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @wsers.each do |wser| %>
+      <tr>
+        <td><%= wser.name %></td>
+        <td><%= link_to 'Show', wser %></td>
+        <td><%= link_to 'Edit', edit_wser_path(wser) %></td>
+        <td><%= link_to 'Destroy', wser, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Wser', new_wser_path %>

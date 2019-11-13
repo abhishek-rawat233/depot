@@ -11,7 +11,7 @@ class Pago
         payment_details.fetch(:cc_num).to_s + "/" +
         payment_details.fetch(:expiration_month).to_s + "/" +
         payment_details.fetch(:expiration_year).to_s
-    when: po
+    when :po
       Rails.logger.info "Processing purchase order: " +
       payment_details.fetch(:po_num).to_s
     else
