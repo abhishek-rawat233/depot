@@ -13,6 +13,13 @@ class OrderMailer < ApplicationMailer
     mail to: order.email, subject: 'Pragmatic Store Order Confirmation'
   end
 
+
+#to be completed
+  def welcome(recipient, recipient_mail)
+    @name = recipient
+    mail to: recipient_mail, subject: 'Welcome'
+  end
+
   # Subject can be set in your I18n file at config/locales/en.yml
   # with the following lookup:
   #
