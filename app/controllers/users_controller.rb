@@ -21,6 +21,17 @@ class UsersController < ApplicationController
   def edit
   end
 
+  #GET /users/1/orders
+  def orders
+    @orders = Order.where(user_id: @current_user.id)
+  end
+
+  def lineItems(current_page = 1)
+    lower_limit = ITEMS_PER_PAGE * (current_page - 1) + 1
+    upper_limit = ITEMS_PER_PAGE * current_page
+    @line_items = @current_user.line_items[lower_limit, upper_limit]
+  end
+
   # POST /users
   # POST /users.json
   def create

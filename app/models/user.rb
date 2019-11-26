@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  has_many :orders
+  has_many :line_items, through: :orders
   validates :name, presence: true, uniqueness: true
   has_secure_password
   validates :email, uniqueness: true, format: {with: /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i, message: 'not valid' }
