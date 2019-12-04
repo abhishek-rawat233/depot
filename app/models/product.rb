@@ -16,8 +16,21 @@ class Product < ApplicationRecord
   has_many :orders, through: :line_items
   has_many :carts, through: :line_items
   # before_destroy :ensure_not_referenced_by_any_line_item
-  after_initialize :default_values
+
+  #after_initialize :default_values
+  scope :enabled, ->{ where(enabled: true) }
   # frozen_string_literal: true
+
+#Get All products which are present in atleast one line_item
+  def self.products_in_line_items
+    where(id: LineItem.select(:product_id).distinct)
+  end
+
+#Get array of product titles which are present in atleast one line item
+  def self.product_titles_in_line_items
+    select(:title).where(id: LineItem.select(:product_id)).to_a
+  end
+
 
   private
   def default_values
