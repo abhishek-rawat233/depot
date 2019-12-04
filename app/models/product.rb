@@ -38,22 +38,6 @@ class Product < ApplicationRecord
     self.discount_price = price if discount_price.nil?
   end
 
-  # def ensure_not_referenced_by_any_line_item
-  #   if line_items.exists? # LineItem.exists?(product_id: self.id)
-  #     p '#################'
-  #     p errors.add(:base, message: 'Product present in Line Items')
-  #     throw :abort
-  #   end
-  # end
-
-  # ensure that there are no line items referencing this product
-  # def ensure_not_referenced_by_any_line_item
-  #   unless line_items.empty?
-  #     errors.add(:base, 'Line Items present')
-  #     throw :abort
-  #   end
-  # end
-
   validates :description, :image_url, presence: true
   # validates :title, :description, :image_url, presence: true #to satify empty title callback this has been commented out
   validates :title, length: {minimum: 10}
