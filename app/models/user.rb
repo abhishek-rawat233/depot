@@ -3,7 +3,7 @@ class User < ApplicationRecord
   has_many :line_items, through: :orders
   validates :name, presence: true, uniqueness: true
   has_secure_password
-  validates :email, uniqueness: true, format: {with: /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i, message: 'not valid' }
+  validates :email, uniqueness: true, format: {with: EMAIL_VALIDATOR, message: 'not valid' }
 
   after_create_commit :send_welcome_mail
   after_destroy :ensure_an_admin_remains

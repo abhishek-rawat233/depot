@@ -17,6 +17,7 @@ class Product < ApplicationRecord
   has_many :carts, through: :line_items
   # before_destroy :ensure_not_referenced_by_any_line_item
   after_initialize :default_values
+  belongs_to :categories
   # frozen_string_literal: true
 
   private
@@ -24,22 +25,6 @@ class Product < ApplicationRecord
     self.title = 'abc' if self.title == ''
     self.discount_price = price if discount_price.nil?
   end
-
-  # def ensure_not_referenced_by_any_line_item
-  #   if line_items.exists? # LineItem.exists?(product_id: self.id)
-  #     p '#################'
-  #     p errors.add(:base, message: 'Product present in Line Items')
-  #     throw :abort
-  #   end
-  # end
-
-  # ensure that there are no line items referencing this product
-  # def ensure_not_referenced_by_any_line_item
-  #   unless line_items.empty?
-  #     errors.add(:base, 'Line Items present')
-  #     throw :abort
-  #   end
-  # end
 
   validates :description, :image_url, presence: true
   # validates :title, :description, :image_url, presence: true #to satify empty title callback this has been commented out
@@ -59,7 +44,5 @@ class Product < ApplicationRecord
                                   message: 'no space and special characters allowed'}
   validates :permalink, format: { with: /(?:\w+\-){2,}\w+/,
                                   message: 'enter atleast 3 words separated with hypen(-)' }
-  # validates :permalink, uniqueness: true, :permalink_space_validation, :permalink_minimum_words_validation
   validates :permalink, uniqueness: true
-  # def space_validation
 end
