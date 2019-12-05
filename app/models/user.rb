@@ -3,6 +3,7 @@ class User < ApplicationRecord
   has_many :line_items, through: :orders
   validates :name, presence: true, uniqueness: true
   has_secure_password
+  # Create a constant file in initializers and separate all constants in that file.
   validates :email, uniqueness: true, format: {with: /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i, message: 'not valid' }
 
   after_create_commit :send_welcome_mail

@@ -46,15 +46,21 @@ class Product < ApplicationRecord
   validates :title, length: {minimum: 10}
   validates :description, length: { minimum: 5, maximum: 10, message: 'should be in between 5-10 characters'}
   validates :title, uniqueness: true
+  # Change this to each validator.
   validates :image_url, allow_blank: true, format: {
     with:
     %r{\.(gif|jp(|e)g|png)\Z}i,
     message: 'must be a URL for GIF, JPG or PNG image.'
   }
+
+  # Handle Case with product discount price present and price absent.
+  # Study if/unless validations options
   validates :price, numericality: { greater_than_or_equal_to: 0.01 }, allow_blank: true
   validates :price, numericality: { greater_than_or_equal_to: :discount_price }
   validates_with PriceValidator
 
+
+  # Change all 3 validations in one
   validates :permalink, format: { without:  /[^a-z0-9\-]+/i,
                                   message: 'no space and special characters allowed'}
   validates :permalink, format: { with: /(?:\w+\-){2,}\w+/,
