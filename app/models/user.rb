@@ -16,13 +16,23 @@ class User < ApplicationRecord
 
   private
     def send_welcome_mail
+      # This is not working. We will check this once mailer is setup
+      # Use letter-opener gem for development environment.
       OrderMailer.welcome(:name, :email)
     end
 
+    # Update method name. Here we are only allowing this for special email not emails.
+    # Extract `special email` in constants.
+    # You need to stop the deletion, instead of raising an exception.
+    # Study how to rollback in callbacks.
     def ensure_admins_cannot_be_updated
       raise Error.new "Can't update an admin" if email == 'admin@depot.com'
     end
 
+    # Update method name. Here we are only allowing this for special email not emails.
+    # Extract `special email` in constants.
+    # You need to stop the deletion, instead of raising an exception.
+    # Study how to rollback in callbacks.
     def ensure_admins_cannot_be_deleted
       raise Error.new "Can't delete an admin" if email == 'admin@depot.com'
     end

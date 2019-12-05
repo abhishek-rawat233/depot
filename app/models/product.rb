@@ -16,12 +16,15 @@ class Product < ApplicationRecord
   has_many :orders, through: :line_items
   has_many :carts, through: :line_items
   # before_destroy :ensure_not_referenced_by_any_line_item
+  # This callback should only run if title is not present.
   after_initialize :default_values
   # frozen_string_literal: true
 
   private
+  # Rename method
   def default_values
     self.title = 'abc' if self.title == ''
+    # create a separate callback for this with valid name
     self.discount_price = price if discount_price.nil?
   end
 
