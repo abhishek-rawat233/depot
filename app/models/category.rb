@@ -1,5 +1,6 @@
 class CategoryValidator < ActiveModel::Validator
   def validate(record)
+    # Change method syntax as discussed.
     is_sub_category = Category.find(record.parent_id).parent_id
     return unless is_sub_category
     record.errors[:parent_id] << "is invalid. Sub-categories can't have sub_categories" if is_sub_category
@@ -14,7 +15,10 @@ class Category < ApplicationRecord
   has_many :products_of_sub_categories, through: :sub_categories, source: :products
 
   validates :name, presence: true
+  # Remove `if` and  use validations arguments
+  # Study allow_blank
   validates :name, uniqueness: true, if: :name?, unless: :parent_id?
   validates_uniqueness_of :name, scope: :parent_id, if: :name?
+  # create custom validation function.
   validates_with CategoryValidator, if: :parent_id?
 end
