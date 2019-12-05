@@ -17,7 +17,8 @@ class Product < ApplicationRecord
   has_many :carts, through: :line_items
   # before_destroy :ensure_not_referenced_by_any_line_item
   after_initialize :default_values
-  # belongs_to :categories
+  belongs_to :category, counter_cache: :products_count
+  # belongs_to :sub_category
   # frozen_string_literal: true
 
   private
