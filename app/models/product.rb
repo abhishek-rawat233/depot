@@ -14,6 +14,7 @@ end
 class Product < ApplicationRecord
   has_many :line_items, dependent: :restrict_with_error #, before_remove: :ensure_not_referenced_by_any_line_item
   has_many :orders, through: :line_items
+  # Change association name to associated_carts.
   has_many :carts, through: :line_items
   # before_destroy :ensure_not_referenced_by_any_line_item
   # This callback should only run if title is not present.
