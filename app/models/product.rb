@@ -18,6 +18,8 @@ class Product < ApplicationRecord
   # before_destroy :ensure_not_referenced_by_any_line_item
   after_initialize :default_values
   belongs_to :category, counter_cache: :products_count
+  # after_create :category_counter
+  after_update :category_counter
   # belongs_to :sub_category
   # frozen_string_literal: true
 
@@ -46,4 +48,12 @@ class Product < ApplicationRecord
   validates :permalink, format: { with: /(?:\w+\-){2,}\w+/,
                                   message: 'enter atleast 3 words separated with hypen(-)' }
   validates :permalink, uniqueness: true
+
+  def category_counter
+    parent_category = Category.find(category_id).parent
+    if parent_category.present?
+      Category.increment_counter(:count, parent_category)
+    end
+  end
+
 end
