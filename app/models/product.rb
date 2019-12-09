@@ -52,7 +52,7 @@ class Product < ApplicationRecord
   def category_counter
     parent_category = Category.find(category_id).parent
     if parent_category.present?
-      Category.increment_counter(:count, parent_category)
+      Category.increment_counter(:products_count, parent_category)
     end
   end
 

@@ -1,5 +1,9 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  layout "myorders", only: [:orders, :lineItems]
+
+  # after_create :set_address
+  # before_update :update_address
 
   # GET /users
   # GET /users.json
@@ -82,8 +86,20 @@ class UsersController < ApplicationController
       @user = User.find(params[:id])
     end
 
+    # def set_address
+    #   @address = Address.create()
+    # end
+    #
+    # def update_address
+    #   @user.address.update()
+    # end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
       params.require(:user).permit(:name, :password, :password_confirmation, :email)
     end
+
+    # def address_params
+    #   params.require(:user).permit(:city, :state, :country, :pincode)
+    # end
 end

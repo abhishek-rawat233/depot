@@ -27,6 +27,11 @@
   </div>
 
   <div class="field">
+    <%= form.label :category %>
+    <%= form.select :category_id, options_for_select(["Select One"] + Category.ids)%>
+  </div>
+
+  <div class="field">
     <%= form.label :price %>
     <%= form.text_field :price %>
   </div>
@@ -44,6 +49,11 @@
   <div class="field">
     <%= form.label :permalink %>
     <%= form.text_field :permalink %>
+  </div>
+
+  <div class="field">
+    <%= form.label :image, 'Upload Image' %>
+    <%= form.file_field :image %>
   </div>
 
   <div class="actions">

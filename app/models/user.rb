@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   has_many :orders
   has_many :line_items, through: :orders
+  has_one :address
   validates :name, presence: true, uniqueness: true
   has_secure_password
   validates :email, uniqueness: true, format: {with: EMAIL_VALIDATOR, message: 'not valid' }
