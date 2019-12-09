@@ -1,0 +1,19 @@
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Parent</th>
+      <th>Number of Products</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @category.each do |category| %>
+      <tr>
+        <td><%= category.name %></td>
+        <td><%= category.parent ? category.parent.name : 'no parent' %></td>
+        <td><%= category.products_count %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

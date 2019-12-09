@@ -1,0 +1,6 @@
+<% if notice %>
+  <aside id="notice"><%= notice %></aside>
+<% end %>
+<% @orders.each do |order| %>
+  <h3><%= order %></h3>
+<%end%>
