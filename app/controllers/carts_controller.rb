@@ -25,6 +25,7 @@ class CartsController < ApplicationController
   # POST /carts
   # POST /carts.json
   def create
+    # debugger
     @cart = Cart.new(cart_params)
 
     respond_to do |format|

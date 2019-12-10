@@ -14,15 +14,27 @@ end
 class Product < ApplicationRecord
   has_many :line_items, dependent: :restrict_with_error #, before_remove: :ensure_not_referenced_by_any_line_item
   has_many :orders, through: :line_items
+  has_many :carts, through: :line_items
   # before_destroy :ensure_not_referenced_by_any_line_item
+  # This callback should only run if title is not present.
   after_initialize :default_values
   # frozen_string_literal: true
 
   private
+  # Rename method
   def default_values
     self.title = 'abc' if self.title == ''
+    # create a separate callback for this with valid name
     self.discount_price = price if discount_price.nil?
   end
+
+  # def ensure_not_referenced_by_any_line_item
+  #   if line_items.exists? # LineItem.exists?(product_id: self.id)
+  #     p '#################'
+  #     p errors.add(:base, message: 'Product present in Line Items')
+  #     throw :abort
+  #   end
+  # end
 
   # ensure that there are no line items referencing this product
   # def ensure_not_referenced_by_any_line_item

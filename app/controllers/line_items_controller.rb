@@ -29,9 +29,9 @@ class LineItemsController < ApplicationController
   def create
     product = Product.find(params[:product_id])
     @line_item = @cart.add_product(product)
-    # debugger
 
     respond_to do |format|
+      # debugger
       if @line_item.save
         format.html { redirect_to store_index_url }
         format.js { @current_item = @line_item }

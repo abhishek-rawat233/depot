@@ -30,11 +30,12 @@ class OrdersController < ApplicationController
   def create
     @order = Order.new(order_params)
     @order.add_line_items_from_cart(@cart)
+    @order.user_id = @current_user.id
 
     respond_to do |format|
       # debugger
       if @order.save
-        Cart.destroy(session[:cart_id])
+        # Cart.destroy(session[:cart_id])
         session[:cart_id] = nil
         ChangeOrderJob.perform_later(@order, pay_type_params.to_h)
         # OrderMailer.received(@order).deliver_later

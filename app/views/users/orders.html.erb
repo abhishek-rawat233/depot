@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+  <% @orders.each_with_index do |order, index| %>
+  <% order_cost = 0 %>
+    <ul><h2><%= "Order #{index + 1}" %></h2>
+    <% order.line_items.each do |line_item| %>
+      <li><%= "#{line_item.product.title}"%></li>
+      <% order_cost += line_item.product.price %>
+    <%end%>
+    <h3><%= "Total cost: #{order_cost}" %></h3>
+    </ul>
+  <% end %>
+
+<%= link_to 'Back', users_path %>

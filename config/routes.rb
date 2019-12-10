@@ -10,7 +10,10 @@ Rails.application.routes.draw do
   get 'sessions/destroy'
 
   # resources :wsers
-  resources :users
+  resources :users do
+    get :orders, to: "users#orders"
+    get :line_items, to: "users#lineItems"
+  end
   resources :products do
     get :who_bought, on: :member
   end

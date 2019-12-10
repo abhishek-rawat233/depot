@@ -1,6 +1,7 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Users</h1>
+<h3><%= link_to 'Orders', user_orders_path(@current_user) %>, <%= link_to 'Line Items', user_line_items_path(@current_user) %></h3>
 
 <table>
   <thead>
