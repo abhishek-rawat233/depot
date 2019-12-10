@@ -1,8 +1,11 @@
 Rails.application.routes.draw do
+
   get 'admin' => 'admin#index'
 
-  get '/admin/reports', to: 'reports#index'
-  get '/admin/categories', to: 'admin#show_categories'
+  scope '/admin' do
+    get '/reports', to: 'reports#index'
+    get '/categories', to: 'admin#show_categories'
+  end
 
   controller :sessions do
     get 'login' => :new
