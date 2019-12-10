@@ -1,4 +1,6 @@
 class AdminController < ApplicationController
+  # before_action : #think more about serialization in show categories 
+
   def index#(from = Date.today - 5, to = Date.today)
     @total_orders = Order.count
     redirect_to store_index_path, notice: "You don't have privilege to access this section" unless @current_user.role == 'admin'
@@ -15,4 +17,7 @@ class AdminController < ApplicationController
       render "categories"
     end
   end
+
+  # private
+
 end
