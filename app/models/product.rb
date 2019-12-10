@@ -1,3 +1,13 @@
+class UrlValidator < ActiveModel::EachValidator
+  def validate_each(record, attribute, value)
+    record.errors[attribute] << (options[:message] || "must be a valid URL") unless url_valid?(value)
+  end
+
+  def url_valid?(url)
+    url.match?(/\.(gif|jp(|e)g|png)/)
+  end
+end
+
 class PriceValidator < ActiveModel::Validator
   def validate(record)
     return if record.price.nil?
@@ -30,9 +40,7 @@ class Product < ApplicationRecord
   validates :price, numericality: { greater_than_or_equal_to: :discount_price }
   validates_with PriceValidator
 
-  validates :permalink, format: { without:  /[^a-z0-9\-]+/i,
-                                  message: 'no space and special characters allowed'}
-  validates :permalink, format: { with: /(?:\w+\-){2,}\w+/,
-                                  message: 'enter atleast 3 words separated with hypen(-)' }
+  validates :permalink, format: { with: /(?:[a-z0-9]+\-){2,}\w+/,
+                                  message: 'enter atleast 3 words separated with hypen(-) and no space and special characters allowed' }
   validates :permalink, uniqueness: true
 end
