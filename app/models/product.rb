@@ -35,7 +35,7 @@ class Product < ApplicationRecord
     with:
     %r{\.(gif|jp(|e)g|png)\Z}i,
     message: 'must be a URL for GIF, JPG or PNG image.'
-  }
+  }, url: true
   validates :price, numericality: { greater_than_or_equal_to: 0.01 }, allow_blank: true
   validates :price, numericality: { greater_than_or_equal_to: :discount_price }
   validates_with PriceValidator
