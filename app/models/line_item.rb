@@ -1,6 +1,6 @@
 class LineItem < ApplicationRecord
   belongs_to :order, optional: true
-  # belongs_to :user
+
   belongs_to :product, optional: true
   belongs_to :cart, counter_cache: :line_items_count
 

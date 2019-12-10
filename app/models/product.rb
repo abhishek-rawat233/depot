@@ -1,9 +1,3 @@
-# class UrlValidator < ActiveModel::EachValidator
-#   def validate_each(record, attribute, value)
-#    record.errors[attribute] << "is not valid" unless value =~ /regex/
-#   end
-# end
-
 class PriceValidator < ActiveModel::Validator
   def validate(record)
     return if record.price.nil?
@@ -12,12 +6,10 @@ class PriceValidator < ActiveModel::Validator
 end
 
 class Product < ApplicationRecord
-  has_many :line_items, dependent: :restrict_with_error #, before_remove: :ensure_not_referenced_by_any_line_item
+  has_many :line_items, dependent: :restrict_with_error
   has_many :orders, through: :line_items
   has_many :carts, through: :line_items
-  # before_destroy :ensure_not_referenced_by_any_line_item
   after_initialize :default_values
-  # frozen_string_literal: true
 
   private
   def default_values
@@ -25,24 +17,7 @@ class Product < ApplicationRecord
     self.discount_price = price if discount_price.nil?
   end
 
-  # def ensure_not_referenced_by_any_line_item
-  #   if line_items.exists? # LineItem.exists?(product_id: self.id)
-  #     p '#################'
-  #     p errors.add(:base, message: 'Product present in Line Items')
-  #     throw :abort
-  #   end
-  # end
-
-  # ensure that there are no line items referencing this product
-  # def ensure_not_referenced_by_any_line_item
-  #   unless line_items.empty?
-  #     errors.add(:base, 'Line Items present')
-  #     throw :abort
-  #   end
-  # end
-
   validates :description, :image_url, presence: true
-  # validates :title, :description, :image_url, presence: true #to satify empty title callback this has been commented out
   validates :title, length: {minimum: 10}
   validates :description, length: { minimum: 5, maximum: 10, message: 'should be in between 5-10 characters'}
   validates :title, uniqueness: true
@@ -59,7 +34,5 @@ class Product < ApplicationRecord
                                   message: 'no space and special characters allowed'}
   validates :permalink, format: { with: /(?:\w+\-){2,}\w+/,
                                   message: 'enter atleast 3 words separated with hypen(-)' }
-  # validates :permalink, uniqueness: true, :permalink_space_validation, :permalink_minimum_words_validation
   validates :permalink, uniqueness: true
-  # def space_validation
 end
