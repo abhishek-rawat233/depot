@@ -8,7 +8,9 @@ class OrderMailer < ApplicationMailer
   #
   def received(order)
     @order = order
+    # attachements.inline[] = File.read(@order.image_url)
     # @greeting = "Hi"
+    headers["X-SYSTEM-PROCESS-ID"] = Process.pid
 
     mail to: order.email, subject: 'Pragmatic Store Order Confirmation'
   end
@@ -18,6 +20,12 @@ class OrderMailer < ApplicationMailer
   def welcome(recipient, recipient_mail)
     @name = recipient
     mail to: recipient_mail, subject: 'Welcome'
+  end
+
+  def send_user_history(user)
+    @user = user
+    @orders = @user.orders
+    mail to: @user.email, subject: 'History'
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml

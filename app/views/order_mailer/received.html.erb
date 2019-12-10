@@ -1,5 +1,16 @@
 <h1>Order#received</h1>
 
-<p>
-  <%= @greeting %>, find me in app/views/order_mailer/received.html.erb
-</p>
+  Dear <%= @order.name %>,
+
+  Thank you for your recent order from The Pragmatic Store.
+
+  You ordered the following items:
+
+  <% @order.line_items.each do |line_item| %>
+  <%= line_item%>
+  <% image_url = '/home/abhishek/Documents/ror/depot/app/assets/images/' + line_item.product.image_url %>
+  <% attachments.inline[image_url] = File.read(image_url) %>
+  <%= image_tag attachments[image_url].url %>
+  price: <%= line_item.product.price %>
+  <% end %>
+  We'll send you a separate e-mail when your order ships.
