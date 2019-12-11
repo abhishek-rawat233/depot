@@ -18,20 +18,18 @@ class User < ApplicationRecord
       OrderMailer.welcome(self)
     end
 
-    # Update method name. Here we are only allowing this for special email not emails.
-    # Extract `special email` in constants.
-    # You need to stop the deletion, instead of raising an exception.
-    # Study how to rollback in callbacks.
     def ensure_admins_cannot_be_updated
-      raise Error.new "Can't update an admin" if email == 'admin@depot.com'
+      if email == 'admin@depot.com'
+        errors.add(message: "Can't update an admin")
+        throw :abort
+      end
     end
 
-    # Update method name. Here we are only allowing this for special email not emails.
-    # Extract `special email` in constants.
-    # You need to stop the deletion, instead of raising an exception.
-    # Study how to rollback in callbacks.
     def ensure_admins_cannot_be_deleted
-      raise Error.new "Can't delete an admin" if email == 'admin@depot.com'
+      if email == 'admin@depot.com'
+        errors.add(message: "Can't delete an admin")
+        throw :abort
+      end
     end
 
     def ensure_an_admin_remains
