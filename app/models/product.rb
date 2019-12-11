@@ -1,9 +1,3 @@
-# class UrlValidator < ActiveModel::EachValidator
-#   def validate_each(record, attribute, value)
-#    record.errors[attribute] << "is not valid" unless value =~ /regex/
-#   end
-# end
-
 class PriceValidator < ActiveModel::Validator
   def validate(record)
     return if record.price.nil?
@@ -27,11 +21,10 @@ class Product < ApplicationRecord
   end
 
   validates :description, :image_url, presence: true
-  # validates :title, :description, :image_url, presence: true #to satify empty title callback this has been commented out
   validates :title, length: {minimum: 10}
   validates :description, length: { minimum: 5, maximum: 10, message: 'should be in between 5-10 characters'}
   validates :title, uniqueness: true
-  # Change this to each validator.
+
   validates :image_url, allow_blank: true, format: {
     with:
     %r{\.(gif|jp(|e)g|png)\Z}i,
@@ -60,5 +53,4 @@ class Product < ApplicationRecord
       throw :abort
     end
   end
-
 end
