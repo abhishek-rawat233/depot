@@ -1,12 +1,11 @@
-# require 'active_model/serializers/xml'
 require 'pago'
 
 class Order < ApplicationRecord
   has_many :line_items, dependent: :destroy
-  belongs_to :user #, dependent: :destroy
-  scope :by_date, ->(from = Date.today, to = Date.today) {where( "created_at between ? and ?", from, to)}
+  belongs_to :user
 
-  # scope :ordered_by_date, -> {where('created_at ?' Date.today)}
+  #2
+  scope :by_date, ->(from = Date.today, to = Date.today) {where created_at: from..to)}
 
   enum pay_type: {
     "Check" => 0,

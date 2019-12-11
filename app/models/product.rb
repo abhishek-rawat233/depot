@@ -1,9 +1,3 @@
-# class UrlValidator < ActiveModel::EachValidator
-#   def validate_each(record, attribute, value)
-#    record.errors[attribute] << "is not valid" unless value =~ /regex/
-#   end
-# end
-
 class PriceValidator < ActiveModel::Validator
   def validate(record)
     return if record.price.nil?
@@ -12,21 +6,19 @@ class PriceValidator < ActiveModel::Validator
 end
 
 class Product < ApplicationRecord
-  has_many :line_items, dependent: :restrict_with_error #, before_remove: :ensure_not_referenced_by_any_line_item
+  has_many :line_items, dependent: :restrict_with_error
   has_many :orders, through: :line_items
   has_many :carts, through: :line_items
-  # before_destroy :ensure_not_referenced_by_any_line_item
 
-  #after_initialize :default_values
+  #1
   scope :enabled, ->{ where(enabled: true) }
-  # frozen_string_literal: true
 
-#Get All products which are present in atleast one line_item
+  #3.1
   def self.products_in_line_items
     where(id: LineItem.select(:product_id).distinct)
   end
 
-#Get array of product titles which are present in atleast one line item
+#3.2
   def self.product_titles_in_line_items
     select(:title).where(id: LineItem.select(:product_id)).to_a
   end
