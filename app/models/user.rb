@@ -1,11 +1,12 @@
 class User < ApplicationRecord
+  #6
   has_many :orders
   has_many :line_items, through: :orders
   validates :name, presence: true, uniqueness: true
   has_secure_password
-  validates :email, uniqueness: true, format: {with: /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i, message: 'not valid' }
+  validates :email, uniqueness: true, format: {with: EMAIL_VALIDATOR, message: 'not valid' }
 
-  after_create_commit :send_welcome_mail
+  after_create :send_welcome_mail
   after_destroy :ensure_an_admin_remains
   before_destroy :ensure_admins_cannot_be_deleted
   before_update :ensure_admins_cannot_be_updated
@@ -15,7 +16,7 @@ class User < ApplicationRecord
 
   private
     def send_welcome_mail
-      OrderMailer.welcome(:name, :email)
+      OrderMailer.welcome(self)
     end
 
     def ensure_admins_cannot_be_updated

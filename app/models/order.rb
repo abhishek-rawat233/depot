@@ -17,7 +17,6 @@ class Order < ApplicationRecord
   validates :pay_type, inclusion: pay_types.keys
 
   def add_line_items_from_cart(cart)
-    # debugger
     cart.line_items.each do |item|
       line_items << item
     end
