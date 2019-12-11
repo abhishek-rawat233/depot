@@ -17,7 +17,6 @@ class User < ApplicationRecord
   private
     def send_welcome_mail
       OrderMailer.welcome(self)
-      # OrderMailer.welcome(:name, :email)
     end
 
     # Update method name. Here we are only allowing this for special email not emails.
