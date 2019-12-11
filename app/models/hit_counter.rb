@@ -1,0 +1,2 @@
+class HitCounter < ApplicationRecord
+end
