@@ -1,0 +1,12 @@
+<% if notice %>
+  <aside id="notice"><%= notice %></aside>
+<% end %>
+
+<% @categories.each do |category| %>
+<h2><%= category.name %></h2>
+<ul>
+  <% category.sub_categories.each  do |sub_category|%>
+  <li><h3><%= sub_category %></h3></li>
+  <% end %>
+</ul>
+<% end %>

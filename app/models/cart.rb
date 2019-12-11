@@ -1,6 +1,7 @@
 class Cart < ApplicationRecord
-  has_many :line_items, dependent: :destroy
   has_many :products, through: :line_items
+
+  has_many :line_items, dependent: :destroy
   scope :enabled_products, -> { joins(:products).where('enabled = true') }
 
   def add_product(product)
