@@ -7,8 +7,6 @@ class CategoryValidator < ActiveModel::Validator
 end
 
 class Category < ApplicationRecord
-  has_many :sub_categories, class_name: "Category", foreign_key: "parent_id"
-  belongs_to :parent, class_name: "Category", optional: true
 
   has_many :products, dependent: :restrict_with_error
   has_many :products_of_sub_categories, through: :sub_categories, source: :products
@@ -19,6 +17,9 @@ class Category < ApplicationRecord
   validates_with CategoryValidator, if: :parent_id?
 
   before_destroy :sub_categories_has_products
+
+  has_many :sub_categories, class_name: "Category", foreign_key: "parent_id", dependent: :destroy
+  belongs_to :parent, class_name: "Category", optional: true
 
   private
     def sub_categories_has_products?

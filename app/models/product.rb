@@ -22,13 +22,6 @@ class Product < ApplicationRecord
   after_update :category_counter
   # belongs_to :sub_category
   # frozen_string_literal: true
-
-  private
-  def default_values
-    self.title = 'abc' if self.title == ''
-    self.discount_price = price if discount_price.nil?
-  end
-
   validates :description, :image_url, presence: true
   # validates :title, :description, :image_url, presence: true #to satify empty title callback this has been commented out
   validates :title, length: {minimum: 10}
@@ -44,10 +37,16 @@ class Product < ApplicationRecord
   validates_with PriceValidator
 
   validates :permalink, format: { without:  /[^a-z0-9\-]+/i,
-                                  message: 'no space and special characters allowed'}
-  validates :permalink, format: { with: /(?:\w+\-){2,}\w+/,
-                                  message: 'enter atleast 3 words separated with hypen(-)' }
-  validates :permalink, uniqueness: true
+    message: 'no space and special characters allowed'}
+    validates :permalink, format: { with: /(?:\w+\-){2,}\w+/,
+    message: 'enter atleast 3 words separated with hypen(-)' }
+    validates :permalink, uniqueness: true
+
+  private
+  def default_values
+    self.title = 'abc' if self.title == ''
+    self.discount_price = price if discount_price.nil?
+  end
 
   def category_counter
     parent_category = Category.find(category_id).parent
