@@ -1,10 +1,9 @@
-# require 'active_model/serializers/xml'
 require 'pago'
 
 class Order < ApplicationRecord
   has_many :line_items, dependent: :destroy
   belongs_to :user #, dependent: :destroy
-  scope :by_date, ->(from = Date.today, to = Date.today) {where( "created_at between ? and ?", from, to)}
+  scope :by_date, ->(from = Date.today, to = Date.today) { where created_at: from..to }
 
   # scope :ordered_by_date, -> {where('created_at ?' Date.today)}
 
@@ -18,7 +17,6 @@ class Order < ApplicationRecord
   validates :pay_type, inclusion: pay_types.keys
 
   def add_line_items_from_cart(cart)
-    # debugger
     cart.line_items.each do |item|
       line_items << item
     end
