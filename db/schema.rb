@@ -10,12 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_04_073524) do
+ActiveRecord::Schema.define(version: 2019_12_05_115455) do
 
   create_table "carts", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "line_items_count", default: 0, null: false
+  end
+
+  create_table "categories", force: :cascade do |t|
+    t.integer "parent_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "name"
+    t.integer "products_count", default: 0, null: false
+    t.index ["parent_id"], name: "index_categories_on_parent_id"
   end
 
   create_table "line_items", force: :cascade do |t|
@@ -51,6 +60,8 @@ ActiveRecord::Schema.define(version: 2019_12_04_073524) do
     t.boolean "enabled", default: false
     t.decimal "discount_price"
     t.string "permalink"
+    t.integer "category_id", default: 9, null: false
+    t.index ["category_id"], name: "index_products_on_category_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -72,4 +83,5 @@ ActiveRecord::Schema.define(version: 2019_12_04_073524) do
   add_foreign_key "line_items", "orders"
   add_foreign_key "line_items", "products"
   add_foreign_key "orders", "users"
+  add_foreign_key "products", "categories"
 end

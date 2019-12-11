@@ -1,5 +1,4 @@
 class User < ApplicationRecord
-  #6
   has_many :orders
   has_many :line_items, through: :orders
   validates :name, presence: true, uniqueness: true

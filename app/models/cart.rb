@@ -1,5 +1,4 @@
 class Cart < ApplicationRecord
-  #2
   has_many :products, through: :line_items
 
   has_many :line_items, dependent: :destroy

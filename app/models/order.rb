@@ -5,8 +5,6 @@ class Order < ApplicationRecord
   belongs_to :user #, dependent: :destroy
   scope :by_date, ->(from = Date.today, to = Date.today) { where created_at: from..to }
 
-  # scope :ordered_by_date, -> {where('created_at ?' Date.today)}
-
   enum pay_type: {
     "Check" => 0,
     "Credit card" =>1,

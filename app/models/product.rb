@@ -16,19 +16,19 @@ class PriceValidator < ActiveModel::Validator
 end
 
 class Product < ApplicationRecord
-  #1
+
   has_many :line_items, dependent: :restrict_with_error
 
-  #3
   has_many :carts, through: :line_items
 
-  #4
   scope :enabled, ->{ where(enabled: true) }
 
   after_initialize :set_default_discount_price, :set_default_title
   has_many :orders, through: :line_items
 
-
+  has_many :orders, through: :line_items
+  belongs_to :category, counter_cache: :products_count
+  after_update :category_counter
 
   validates :description, :image_url, presence: true
   validates :title, length: {minimum: 10}
@@ -57,6 +57,12 @@ class Product < ApplicationRecord
   validates :permalink, uniqueness: true
 
   private
+  def category_counter
+    parent_category = Category.find(category_id).parent
+    if parent_category.present?
+      Category.increment_counter(:count, parent_category)
+    end
+  end
 
   def set_default_title
     title = 'abc' if title == ''
