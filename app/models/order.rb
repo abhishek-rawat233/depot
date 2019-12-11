@@ -2,7 +2,10 @@ require 'pago'
 
 class Order < ApplicationRecord
   has_many :line_items, dependent: :destroy
-  belongs_to :user
+  belongs_to :user #, dependent: :destroy
+  scope :by_date, ->(from = Date.today, to = Date.today) { where created_at: from..to }
+
+  # scope :ordered_by_date, -> {where('created_at ?' Date.today)}
 
   enum pay_type: {
     "Check" => 0,

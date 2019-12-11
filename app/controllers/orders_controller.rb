@@ -76,6 +76,7 @@ class OrdersController < ApplicationController
         redirect_to store_index_url, notice: 'Your cart is empty'
       end
     end
+
     def set_order
       @order = Order.find(params[:id])
     end
