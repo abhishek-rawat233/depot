@@ -27,8 +27,8 @@
   </div>
 
   <div class="field">
-    <%= form.label :category %>
-    <%= form.select :category_id, options_for_select(["Select One"] + Category.ids)%>
+    <%= form.label :category_id, 'Category' %>
+    <%= form.select :category_id, Category.all.map { |c| [c.name, c.id] }, include_blank: "Select One" %>
   </div>
 
   <div class="field">

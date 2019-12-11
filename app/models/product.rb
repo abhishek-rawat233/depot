@@ -1,9 +1,3 @@
-# class UrlValidator < ActiveModel::EachValidator
-#   def validate_each(record, attribute, value)
-#    record.errors[attribute] << "is not valid" unless value =~ /regex/
-#   end
-# end
-
 class PriceValidator < ActiveModel::Validator
   def validate(record)
     return if record.price.nil?
