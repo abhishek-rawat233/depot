@@ -1,9 +1,3 @@
-# class UrlValidator < ActiveModel::EachValidator
-#   def validate_each(record, attribute, value)
-#    record.errors[attribute] << "is not valid" unless value =~ /regex/
-#   end
-# end
-
 class PriceValidator < ActiveModel::Validator
   def validate(record)
     return if record.price.nil?
@@ -12,16 +6,14 @@ class PriceValidator < ActiveModel::Validator
 end
 
 class Product < ApplicationRecord
-  has_many :line_items, dependent: :restrict_with_error #, before_remove: :ensure_not_referenced_by_any_line_item
+  has_many :line_items, dependent: :restrict_with_error
   has_many :orders, through: :line_items
   has_many :carts, through: :line_items
-  # before_destroy :ensure_not_referenced_by_any_line_item
+
   after_initialize :default_values
   belongs_to :category, counter_cache: :products_count
-  # after_create :category_counter
+
   after_update :category_counter
-  # belongs_to :sub_category
-  # frozen_string_literal: true
 
   private
   def default_values

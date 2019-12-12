@@ -2,8 +2,16 @@ class ApplicationController < ActionController::Base
   before_action :set_i18n_locale_from_params
   before_action :authorize
   before_action :set_current_user
+  before_action :check_browser
 
   protected
+    def check_browser
+      user_agent = request.user_agent
+      if user_agent.match? /.*firefox.*/i and request.path != store_index_path
+        render file: "#{Rails.root}/public/404", status: :not_found
+      end
+    end
+
     def set_i18n_locale_from_params
       if params[:locale]
         if I18n.available_locales.map(&:to_s).include?(params[:locale])

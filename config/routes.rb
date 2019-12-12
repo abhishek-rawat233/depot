@@ -1,9 +1,12 @@
 Rails.application.routes.draw do
   get 'admin' => 'admin#index'
 
+
   scope '/admin' do
     get '/reports', to: 'reports#index'
     get '/categories', to: 'admin#show_categories'
+    get '/categories/:id/books', to: redirect("") if :id.match /[0-9]*/
+    get '/categories/:id/books', to: 'admin#show_products', as: 'categories_products'
   end
 
   controller :sessions do
@@ -18,16 +21,12 @@ Rails.application.routes.draw do
   resources :users do
     get :'/my-orders', to: "users#orders", as: 'orders'
     get :'/my-items', to: "users#lineItems", as: 'line_items'
-    # get :'/line_items', to: "users#lineItems"
   end
 
-  #resources :products, alias: :books
   resources :products, path: :books, as: :products
-  # scope :products, as :books do
     resources :products do
       get :who_bought, on: :member
     end
-  # end
 
   scope '(:locale)' do
     resources :orders
@@ -35,6 +34,4 @@ Rails.application.routes.draw do
     resources :carts
     root 'store#index', as: 'store_index', via: :all
   end
-  # get 'store/index'
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

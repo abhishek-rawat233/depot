@@ -10,7 +10,7 @@
   <tbody>
     <% @category.each do |category| %>
       <tr>
-        <td><%= category.name %></td>
+        <td><%= link_to category.name, categories_products_path(category.id) %></td>
         <td><%= category.parent ? category.parent.name : 'no parent' %></td>
         <td><%= category.products_count %></td>
       </tr>
