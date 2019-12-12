@@ -1,4 +1,5 @@
 class AdminController < ApplicationController
+  before_action :is_user_admin?
 
   def index
     @total_orders = Order.count
@@ -18,5 +19,8 @@ class AdminController < ApplicationController
     end
   end
   # private
-
+  private
+  def is_user_admin
+    redirect_to store_index_path, notice: "You don't have privilege to access this section" unless @current_user.role == 'admin'
+  end
 end

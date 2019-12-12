@@ -6,7 +6,7 @@ class User < ApplicationRecord
   has_secure_password
   validates :email, uniqueness: true, format: {with: EMAIL_VALIDATOR, message: 'not valid' }
 
-  after_create_commit :send_welcome_mail
+  after_create :send_welcome_mail
   after_destroy :ensure_an_admin_remains
   before_destroy :ensure_admins_cannot_be_deleted
   before_update :ensure_admins_cannot_be_updated
@@ -16,15 +16,21 @@ class User < ApplicationRecord
 
   private
     def send_welcome_mail
-      OrderMailer.welcome(:name, :email)
+      OrderMailer.welcome(self)
     end
 
     def ensure_admins_cannot_be_updated
-      raise Error.new "Can't update an admin" if email == 'admin@depot.com'
+      if email == 'admin@depot.com'
+        errors.add(message: "Can't update an admin")
+        throw :abort
+      end
     end
 
     def ensure_admins_cannot_be_deleted
-      raise Error.new "Can't delete an admin" if email == 'admin@depot.com'
+      if email == 'admin@depot.com'
+        errors.add(message: "Can't delete an admin")
+        throw :abort
+      end
     end
 
     def ensure_an_admin_remains

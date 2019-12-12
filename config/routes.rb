@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   get 'admin' => 'admin#index'
 
 
@@ -18,6 +19,9 @@ Rails.application.routes.draw do
   get 'sessions/create'
   get 'sessions/destroy'
 
+  get 'category' => 'category#index'
+
+  # resources :wsers
   resources :users do
     get :'/my-orders', to: "users#orders", as: 'orders'
     get :'/my-items', to: "users#lineItems", as: 'line_items'
