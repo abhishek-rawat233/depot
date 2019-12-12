@@ -27,8 +27,8 @@
   </div>
 
   <div class="field">
-    <%= form.label :category %>
-    <%= form.select :category_id, options_for_select(["Select One"] + Category.ids)%>
+    <%= form.label :category_id, 'Category' %>
+    <%= form.select :category_id, Category.all.map { |c| [c.name, c.id] }, include_blank: "Select One" %>
   </div>
 
   <div class="field">
@@ -54,6 +54,19 @@
   <div class="field">
     <%= form.label :image, 'Upload Image' %>
     <%= form.file_field :image %>
+  </div>
+
+  <div class="field">
+    <%= form.label :image1 %>
+    <%= form.file_field :image1, id: :product_image1 %>
+  </div>
+  <div class="field">
+    <%= form.label :image2 %>
+    <%= form.file_field :image2, id: :product_image2 %>
+  </div>
+  <div class="field">
+    <%= form.label :image3 %>
+    <%= form.file_field :image3, id: :product_image3 %>
   </div>
 
   <div class="actions">

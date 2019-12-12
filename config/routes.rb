@@ -15,6 +15,8 @@ Rails.application.routes.draw do
   get 'sessions/create'
   get 'sessions/destroy'
 
+  get 'category' => 'category#index'
+
   # resources :wsers
   resources :users do
     get :orders, to: "users#orders"

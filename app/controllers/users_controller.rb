@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  after_action :set_user_address, only: [:create, :update]
   layout "myorders", only: [:orders, :lineItems]
 
   def index
@@ -69,7 +70,22 @@ class UsersController < ApplicationController
       @user = User.find(params[:id])
     end
 
+    def set_user_address
+      address_params = get_address_params
+      if Address.where(user_id: @user.id).present?
+        Address.find(user_id: @user.id).update(address_params)
+      else
+        Address.create(address_params)
+      end
+    end
+
     def user_params
       params.require(:user).permit(:name, :password, :password_confirmation, :email)
+    end
+
+    def get_address_params
+      address_params = params.require(:user).permit(:city, :state, :country, :pincode)
+      address_params[:user_id] = @user.id
+      return address_params
     end
 end
