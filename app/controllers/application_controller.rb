@@ -2,11 +2,27 @@ class ApplicationController < ActionController::Base
   before_action :set_i18n_locale_from_params
   before_action :authorize
   before_action :set_current_user, :update_counter
-  around_action :req
+  around_action :action_view_response_time
+  before_action :log_out_due_to_inactivity
 
   protected
-    def req
-      debugger
+    def log_out_due_to_inactivity
+      session[:inactive_time] ||= Time.now
+      if @current_user.present?
+        if Time.now - session[:inactive_time] > 5.minutes
+          reset_session
+          redirect_to login_path, notice: "Logged out because of inactivity!!!!"
+        else
+          session[:inactive_time] = Time.now
+        end
+      end
+    end
+
+    def action_view_response_time
+      starting_time = Time.now
+      yield
+      time_taken = Time.now - starting_time
+      response.headers["x-responded-in"] = time_taken
     end
 
     def set_i18n_locale_from_params
