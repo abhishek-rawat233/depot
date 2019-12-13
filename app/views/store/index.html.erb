@@ -1,5 +1,3 @@
-<!-- <h1>Store#index</h1>
-<p>Find me in app/views/store/index.html.erb</p> -->
 <% if notice %>
   <aside id="notice"><%= notice %></aside>
 <% end %>
@@ -19,6 +17,7 @@
             <%= number_to_currency(product.price) %>
             <%= button_to t('.add_html'), line_items_path(product_id: product, locale: I18n.locale), remote: true %>
           </div>
+          <%= render 'update_ratings', product: product %>
         </li>
       <% end %>
     <% end %>

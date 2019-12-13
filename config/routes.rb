@@ -10,6 +10,8 @@ Rails.application.routes.draw do
     get '/categories/:id/books', to: 'admin#show_products', as: 'categories_products'
   end
 
+  match '/update_product_ratings' => "store#update_ratings", via: :all
+
   controller :sessions do
     get 'login' => :new
     post 'login' => :create

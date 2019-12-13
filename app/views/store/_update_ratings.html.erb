@@ -1,0 +1,9 @@
+<div>
+  <% product = local_assigns[:product] %>
+  rating: <h3 id= "<%= "product_#{product.id}_average_rating" %>">
+     <%= product.average_rating %>
+   </h3>
+  <%= select_tag("product_#{product.id}_rating", options_for_select((0..5).step(0.5).to_a),
+      class: 'product_rating', "data-average-rating" => "#product_#{product.id}_average_rating",
+      "data-product-id" => "#{product.id}", "data-user-id" => "" ) %>
+</div>

@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   before_action :authorize
   before_action :set_current_user, :update_counter
   around_action :action_view_response_time
-  before_action :log_out_due_to_inactivity
+  # before_action :log_out_due_to_inactivity
 
   before_action :check_browser
 
@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
     def log_out_due_to_inactivity
       session[:inactive_time] ||= Time.now
       if @current_user.present?
-        if Time.now - session[:inactive_time] > 5.minutes
+        if Time.now - Time.new(session[:inactive_time]) > 5.minutes
           reset_session
           redirect_to login_path, notice: "Logged out because of inactivity!!!!"
         else

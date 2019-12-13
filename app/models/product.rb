@@ -30,6 +30,8 @@ class Product < ApplicationRecord
   belongs_to :category, counter_cache: :products_count
   after_update :category_counter
 
+  has_many :ratings
+
   validates :description, :image_url, presence: true
   validates :title, length: {minimum: 10}
   validates :description, length: { minimum: 5, maximum: 10, message: 'should be in between 5-10 characters'}
@@ -55,6 +57,16 @@ class Product < ApplicationRecord
   validates :permalink, format: { with: /(?:[a-z0-9]+\-){2,}\w+/,
                                   message: 'enter atleast 3 words separated with hypen(-) and no space and special characters allowed' }
   validates :permalink, uniqueness: true
+
+  def average_rating
+    total_rating = 0
+    total_users_rated = ratings.count
+    ratings.each do |rating|
+      total_rating += rating.rating
+    end
+    avg_rating = total_rating/total_users_rated
+    avg_rating.round(1)
+  end
 
   private
   def category_counter

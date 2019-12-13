@@ -20,7 +20,7 @@ class AdminController < ApplicationController
   end
   # private
   private
-  def is_user_admin
+  def is_user_admin?
     redirect_to store_index_path, notice: "You don't have privilege to access this section" unless @current_user.role == 'admin'
   end
 end
