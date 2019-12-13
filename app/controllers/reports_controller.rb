@@ -1,5 +1,8 @@
 class ReportsController < ApplicationController
-  def index(from = 5.days.ago, to = Date.tomorrow)#instead of today tomorrow else this doesn't show orders that were created today
+  include ReportConcerns
+  before_action :set_from_and_to
+
+  def index(from = @from, to = @to)
     @orders = Order.where(created_at: from..to)
   end
 end

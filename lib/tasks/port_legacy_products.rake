@@ -3,7 +3,7 @@ namespace :port_legacy_products do
   task :set_legacy_products_category => :environment do
     Product.all do |product|
       # p product
-      product.update(:category_id, Category.ids.first) if product.category_id?
+      product.update_all(:category_id, Category.ids.first) if product.category_id?
     end
   end
 end

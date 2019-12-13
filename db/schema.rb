@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_12_083416) do
+ActiveRecord::Schema.define(version: 2019_12_13_093750) do
 
   create_table "action_mailbox_inbound_emails", force: :cascade do |t|
     t.integer "status", default: 0, null: false
@@ -67,12 +67,6 @@ ActiveRecord::Schema.define(version: 2019_12_12_083416) do
     t.string "name"
     t.integer "products_count", default: 0, null: false
     t.index ["parent_id"], name: "index_categories_on_parent_id"
-  end
-
-  create_table "hit_counters", force: :cascade do |t|
-    t.integer "hit_count", default: 0
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "line_items", force: :cascade do |t|

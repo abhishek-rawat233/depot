@@ -1,5 +1,4 @@
 class Category < ApplicationRecord
-  #exercise
   has_many :sub_categories, class_name: "Category", foreign_key: "parent_id", dependent: :destroy
   belongs_to :parent, class_name: "Category", optional: true
 
@@ -12,6 +11,10 @@ class Category < ApplicationRecord
 
   before_destroy :sub_categories_has_products
   before_save :parent_cannot_be_subcategory, if: :parent_id?
+
+  def get_all_products
+    products + products_of_sub_categories
+  end
 
   private
     def parent_cannot_be_subcategory
