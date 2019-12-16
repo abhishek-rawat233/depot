@@ -1,0 +1,5 @@
+<div>
+  <% (@first_page..@last_page).each do |page_number| %>
+    <%= link_to page_number, user_line_items_path(page_number: page_number) %>
+  <% end %>
+</div>

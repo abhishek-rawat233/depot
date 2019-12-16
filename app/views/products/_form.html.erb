@@ -52,21 +52,8 @@
   </div>
 
   <div class="field">
-    <%= form.label :image, 'Upload Image' %>
-    <%= form.file_field :image %>
-  </div>
-
-  <div class="field">
-    <%= form.label :image1 %>
-    <%= form.file_field :image1, id: :product_image1 %>
-  </div>
-  <div class="field">
-    <%= form.label :image2 %>
-    <%= form.file_field :image2, id: :product_image2 %>
-  </div>
-  <div class="field">
-    <%= form.label :image3 %>
-    <%= form.file_field :image3, id: :product_image3 %>
+    <%= form.label :extra_images, 'Upload Image' %>
+    <%= form.file_field :extra_images, multiple: true %>
   </div>
 
   <div class="actions">

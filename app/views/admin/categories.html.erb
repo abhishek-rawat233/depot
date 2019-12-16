@@ -11,7 +11,7 @@
     <% @categories.each do |category| %>
       <tr>
         <td><%= link_to category.name, categories_products_path(category.id) %></td>
-        <td><%= get_category_parent(category) %></td>
+        <td><%= get_parent_category(category) %></td>
         <td><%= category.products_count %></td>
       </tr>
     <% end %>

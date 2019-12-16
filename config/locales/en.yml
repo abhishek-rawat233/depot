@@ -91,3 +91,6 @@ en:
 
 
   thanks:          "Thank you for your order"
+
+  mail:
+    greet: "English Greetings"

@@ -1,5 +1,5 @@
 module AdminHelper
-  def get_category_parent(category)
-    category.parent ? category.parent.name : 'no parent'
+  def get_parent_category(category)
+    category.parent.try(:name) || 'no parent'
   end
 end

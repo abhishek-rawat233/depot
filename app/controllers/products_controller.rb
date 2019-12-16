@@ -1,11 +1,13 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: [:show, :edit, :update, :destroy]
+  after_action :set_image_collection, only: [:create, :update]
 
   def index
     @products = Product.all
   end
 
   def show
+    # @products_extra_images = @product.images.map { |image| (image.image_url) }
   end
 
   def new
@@ -66,11 +68,26 @@ class ProductsController < ApplicationController
   end
 
   private
+    def set_image_collection
+      uploaded_images = get_uploaded_images
+      if @product.images.length == IMAGE_SET_LIMIT && uploaded_images.present?
+        render :edit, notice: "no more images can be uploaded"
+      end
+      remaining_images_allocation = IMAGE_SET_LIMIT - @product.images.length
+      uploaded_images[0...remaining_images_allocation].each do |image|
+      @product.images.create({image_url: image.original_filename})
+      end
+    end
+
     def set_product
       @product = Product.find(params[:id])
     end
 
+    def get_uploaded_images
+      params[:product][:extra_images]
+    end
+
     def product_params
-      params.require(:product).permit(:title, :description, :image_url, :price, :enabled, :discount_price, :permalink, :category_id, :image1, :image2, :image3)
+      params.require(:product).permit(:title, :description, :image_url, :price, :enabled, :discount_price, :permalink, :category_id)
     end
 end

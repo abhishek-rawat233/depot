@@ -64,3 +64,6 @@ es:
         po_number: "Número"
 
   thanks:          "Gracias por su pedido"
+
+  mail:
+    greet: "Espanol Greetings"

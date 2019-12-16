@@ -1,12 +1,14 @@
 class User < ApplicationRecord
+  enum language: [:english, :hindi]
+
   has_many :orders
   has_many :line_items, through: :orders
   has_one :address
   validates :name, presence: true, uniqueness: true
   has_secure_password
   validates :email, uniqueness: true, format: {with: EMAIL_VALIDATOR, message: 'not valid' }
-  has_many :ratings
-  # has_one :rating, scope: :product
+  has_many :ratings, dependent: :restrict_with_error
+  has_many :products, through: :ratings
 
   after_create :send_welcome_mail
   after_destroy :ensure_an_admin_remains

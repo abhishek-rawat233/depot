@@ -2,7 +2,10 @@ class ReportsController < ApplicationController
   include ReportConcerns
   before_action :set_from_and_to
 
-  def index(from = @from, to = @to)
-    @orders = Order.where(created_at: from..to)
+  def index
+    @orders = Order.by_date(params[:from], params[:to])
+  end
+
+  def create
   end
 end

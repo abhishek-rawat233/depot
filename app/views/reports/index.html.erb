@@ -1,6 +1,13 @@
 <% if notice %>
   <aside id="notice"><%= notice %></aside>
 <% end %>
-<% @orders.each do |order| %>
-  <h3><%= order %></h3>
-<%end%>
+<%= form_for :order, method: :get, url: reports_path do %>
+  <h3>From</h3>
+  <%= date_field_tag :from, :date %>
+  <h3>To</h3>
+  <%= date_field_tag :to, :date %>
+
+  <%= submit_tag 'submit' %>
+<% end %>
+
+<%= render "orders" %>

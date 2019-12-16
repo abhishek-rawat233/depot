@@ -1,5 +1,17 @@
-<h1>Order#received</h1>
+Dear <%= @order.name %>
+<h1> this <%= t('mail.greet') %></h1>
+Thank you for your recent order from The Pragmatic Store.
 
-<p>
-  <%= @greeting %>, find me in app/views/order_mailer/received.html.erb
-</p>
+You ordered the following items:
+<% @order.line_items.each do |line_item| %>
+  <% product = line_item.product %>
+  <% attachments.inline[product.image_url] = File.read(Rails.root.to_s + "/app/assets/images/" + product.image_url) %>
+  <%= image_tag attachments[product.image_url].url %>
+  <% product.images.each do |image| %>
+    <% extra_image_url = image.image_url %>
+    <%= attachments[extra_image_url] = File.read(Rails.root.to_s + "/app/assets/images/" + extra_image_url) if asset_digest_path(extra_image_url) %>
+  <% end %>
+  <h2>Price: <%= product.price %></h2>
+<% end %>
+
+We'll send you a separate e-mail when your order ships.

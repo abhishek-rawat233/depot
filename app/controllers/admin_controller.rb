@@ -1,7 +1,7 @@
 class AdminController < ApplicationController
   include AdminConcerns
   before_action :redirect_non_admin_users
-  before_action :select_category
+  before_action :select_category, only: :show_products
 
   def index
     @total_orders = Order.count
@@ -17,7 +17,7 @@ class AdminController < ApplicationController
     if @category.present?
       @products = @category.get_all_products
     else
-      redirect_to categories_path, notice: "no such id present" unless @category.present?
+      redirect_to categories_path, notice: "no such id present"
     end
   end
 

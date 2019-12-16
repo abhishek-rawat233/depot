@@ -15,6 +15,10 @@
   <%= @product.image_url %>
 </p>
 
+<%= tag.div(id: "slide_container",
+              class: "slide_container",
+              "data-images": set_images_path(@product.images)) %>
+
 <p>
   <strong>Price:</strong>
   <%= @product.price %>

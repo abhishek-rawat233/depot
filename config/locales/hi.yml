@@ -1,0 +1,69 @@
+hi:
+
+  number:
+    currency:
+      format:
+        unit:      "₹"
+        precision: 2
+        separator: ","
+        delimiter: "."
+        format:    "%n&nbsp;%u"
+
+  activerecord:
+    errors:
+      messages:
+        inclusion: "Hindi no est&aacute; incluido en la lista"
+        blank:     " Hindi no puede quedar en blanco"
+  errors:
+    template:
+      body:        "Hindi Hay problemas con los siguientes campos:"
+      header:
+        one:       "Hindi 1 error ha impedido que este %{model} se guarde"
+        other:     "Hindi %{count} errores han impedido que este %{model} se guarde"
+
+  layouts:
+    application:
+      title:       "Hindi Biblioteca de Pragmatic"
+      home:        "Hindi Inicio"
+      questions:   "Hindi Preguntas"
+      news:        "Hindi Noticias"
+      contact:     "Hindi Contacto"
+
+  carts:
+    cart:
+      title:       "Hindi Carrito de la Compra"
+      empty:       "Hindi Vaciar Carrito"
+      checkout:    "Comprar"
+
+  store:
+    index:
+      title_html:  "Hindi Su Cat&aacute;logo de Pragmatic"
+      add_html:    "A&ntilde;adir al Carrito"
+
+  orders:
+    new:
+      legend:       "Hindi Por favor, introduzca sus datos"
+    form:
+      name:         "Hindi Nombre"
+      address_html: "Hindi Direcci&oacute;n"
+      email:        "Hindi E-mail"
+      pay_type:     "Hindi Forma de pago"
+      pay_prompt_html: "HINDI Seleccione un método de pago"
+      submit:       "Hindi Realizar Pedido"
+      pay_types:
+        check:           "Hindi Cheque"
+        credit_card:     "Hindi Tarjeta de Crédito"
+        purchase_order:  "Hindi Orden de Compra"
+      check_pay_type:
+        routing_number: "Hindi # de Enrutamiento"
+        account_number: "Hindi # de Cuenta"
+      credit_card_pay_type:
+        cc_number: "Hindi Número"
+        expiration_date: "Hindi Expiración"
+      purchase_order_pay_type:
+        po_number: "Hindi Número"
+
+  thanks:          "Hindi Gracias por su pedido"
+
+  mail:
+    greet: "Hindi Greetings"

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_13_093750) do
+ActiveRecord::Schema.define(version: 2019_12_16_054112) do
 
   create_table "action_mailbox_inbound_emails", force: :cascade do |t|
     t.integer "status", default: 0, null: false
@@ -69,6 +69,15 @@ ActiveRecord::Schema.define(version: 2019_12_13_093750) do
     t.index ["parent_id"], name: "index_categories_on_parent_id"
   end
 
+  create_table "images", force: :cascade do |t|
+    t.string "image_url"
+    t.string "imageable_type"
+    t.integer "imageable_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["imageable_type", "imageable_id"], name: "index_images_on_imageable_type_and_imageable_id"
+  end
+
   create_table "line_items", force: :cascade do |t|
     t.integer "product_id", null: false
     t.integer "cart_id"
@@ -123,7 +132,7 @@ ActiveRecord::Schema.define(version: 2019_12_13_093750) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "email"
     t.string "role", default: "user"
-    t.string "language", default: "english"
+    t.integer "language", default: 0
   end
 
   create_table "wsers", force: :cascade do |t|

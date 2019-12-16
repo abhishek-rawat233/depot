@@ -2,6 +2,7 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   after_action :set_user_address, only: [:create, :update]
   layout "myorders", only: [:orders, :lineItems]
+  before_action :pagination, only: [:lineItems]
 
   def index
     @users = User.order(:name)
@@ -21,10 +22,17 @@ class UsersController < ApplicationController
     @orders = Order.where(user_id: @current_user.id)
   end
 
-  def lineItems(current_page = 1)
-    lower_limit = ITEMS_PER_PAGE * (current_page - 1) + 1
-    upper_limit = ITEMS_PER_PAGE * current_page
-    @line_items = @current_user.line_items[lower_limit, upper_limit]
+  def lineItems()
+    @current_page ||= 1
+    page_first_item = ITEMS_PER_PAGE * (@current_page - 1) + 1
+    page_last_item = ITEMS_PER_PAGE * @current_page
+    @line_items = @current_user.line_items[page_first_item, page_last_item]
+  end
+
+  def pagination
+    @current_page = params[:page_number].to_i unless params[:page_number].nil?
+    @first_page = 1
+    @last_page = (@current_user.line_items.count.to_f/ITEMS_PER_PAGE).ceil
   end
 
   def create

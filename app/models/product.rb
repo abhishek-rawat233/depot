@@ -30,7 +30,10 @@ class Product < ApplicationRecord
   belongs_to :category, counter_cache: :products_count
   after_update :category_counter
 
+  has_many :images, as: :imageable
+
   has_many :ratings
+  has_many :users, through: :ratings
 
   validates :description, :image_url, presence: true
   validates :title, length: {minimum: 10}
